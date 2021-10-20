@@ -1,6 +1,6 @@
-import { Optional } from '@lib/types'
+import { MonadicError, Optional } from '@lib/types'
 
 export default interface ITokenAdapter {
   getToken(user: IUser): string
-  verifyToken(token: string): [Optional<string>, any]
+  verifyToken(token: string): MonadicError<string>
 }

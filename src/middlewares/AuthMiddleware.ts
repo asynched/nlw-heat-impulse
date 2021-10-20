@@ -26,7 +26,7 @@ const authMiddleware: MiddlewareHandler = (
     })
   }
 
-  request.user_id = sub as string
+  request.user_id = sub
 
   next()
 }

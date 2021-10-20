@@ -1,4 +1,4 @@
-import { Optional } from '@lib/types'
+import { MonadicError, Optional } from '@lib/types'
 import { sign, verify } from 'jsonwebtoken'
 import ITokenAdapter from './ITokenAdapter'
 
@@ -24,7 +24,7 @@ export default class JWTTokenAdapter implements ITokenAdapter {
     )
   }
 
-  verifyToken(token: string): [Optional<string>, any] {
+  verifyToken(token: string): MonadicError<string> {
     try {
       const { sub } = verify(
         token,
