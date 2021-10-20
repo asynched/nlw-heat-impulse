@@ -18,8 +18,6 @@ export default class UserProfileController {
         .json({ message: "User with the provided ID wasn't found" })
     }
 
-    return response.status(200).json({
-      user,
-    })
+    return response.status(200).json(user)
   }
 }

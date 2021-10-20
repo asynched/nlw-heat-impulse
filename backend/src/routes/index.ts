@@ -10,10 +10,11 @@ const router = Router()
 router.get('/auth/sign-in/github', UserAuthenticationModule.login)
 router.get('/auth/sign-in/callback', UserAuthenticationModule.authCallback)
 router.get('/users/:user_id', UserProfileModule.getUserProfile)
+router.get('/messages', MessageModule.getMessages)
 
 // Auth required
 router.use(authMiddleware)
 router.post('/messages', MessageModule.createMessage)
-router.get('/messages', MessageModule.getMessages)
+router.get('/profile', UserProfileModule.getUserProfile)
 
 export default router

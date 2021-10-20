@@ -12,8 +12,6 @@ const socketServer = new SocketIOServer(httpServer, {
 })
 
 socketServer.on('connection', (socket) => {
-  console.log('User connected')
-
   socket.emit('message', {
     message: 'Hello, client!',
   })
