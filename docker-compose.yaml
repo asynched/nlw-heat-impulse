@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    ports:
+      - '5432:5432'
+    container_name: 'database'
+
+  backend:
+    build: .
+    ports:
+      - '3333:3333'
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgresql://docker:docker@database:5432/nlw-heat?schema=public
+    container_name: 'backend'
+    command: >
+      bash -c "yarn prisma db push && yarn dev"
