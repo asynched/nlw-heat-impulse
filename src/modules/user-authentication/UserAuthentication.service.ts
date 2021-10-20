@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { PrismaClient, User } from '.prisma/client'
 import ITokenAdapter from '@lib/adapters/token/ITokenAdapter'
-import { Optional } from '@lib/types'
+import { MonadicError } from '@lib/types'
 
 export default class UserAuthenticationService {
   public constructor(
@@ -11,7 +11,7 @@ export default class UserAuthenticationService {
 
   async execute(
     code: string
-  ): Promise<[Optional<{ token: string; user: User }>, any]> {
+  ): Promise<MonadicError<{ token: string; user: User }>> {
     try {
       const accessToken = await this.getAccessToken(code)
       const githubUserData = await this.getGithubUserData(accessToken)

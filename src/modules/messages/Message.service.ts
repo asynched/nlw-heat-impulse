@@ -1,5 +1,5 @@
 import { PrismaClient, Message, User } from '.prisma/client'
-import { Optional } from '@lib/types'
+import { MonadicError } from '@lib/types'
 import { Server as SocketServer } from 'socket.io'
 
 export default class MessageService {
@@ -11,7 +11,7 @@ export default class MessageService {
   async createMessage(
     text: string,
     user_id: string
-  ): Promise<[Optional<Message & { user: User }>, any]> {
+  ): Promise<MonadicError<Message & { user: User }>> {
     try {
       const message = await this.prismaClient.message.create({
         data: {
@@ -30,7 +30,7 @@ export default class MessageService {
   }
 
   async getLatestMessages(): Promise<
-    [Optional<Array<Message & { user: User }>>, any]
+    MonadicError<Array<Message & { user: User }>>
   > {
     try {
       const messages = await this.prismaClient.message.findMany({

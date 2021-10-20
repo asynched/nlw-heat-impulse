@@ -1,7 +1,13 @@
+import ITokenAdapter from '@lib/adapters/token/ITokenAdapter'
 import JWTTokenAdapter from '@lib/adapters/token/JWTTokenAdapter'
 import MiddlewareHandler from './types'
 
-const authMiddleware: MiddlewareHandler = (request, response, next) => {
+const authMiddleware: MiddlewareHandler = (
+  request,
+  response,
+  next,
+  tokenAdapter: ITokenAdapter = new JWTTokenAdapter()
+) => {
   const authToken = request.headers.authorization
 
   if (!authToken) {
@@ -12,7 +18,7 @@ const authMiddleware: MiddlewareHandler = (request, response, next) => {
 
   const [_prefix, token] = authToken.split(' ')
 
-  const [sub, error] = new JWTTokenAdapter().verifyToken(token)
+  const [sub, error] = tokenAdapter.verifyToken(token)
 
   if (error) {
     return response.status(401).json({
